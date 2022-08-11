@@ -1,4 +1,4 @@
-# IH_FINAL Project -  Binary classification of ransomware bitcoin addresses 
+# Binary classification of ransomware bitcoin addresses 
 
 ## Introduction
 
