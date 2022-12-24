@@ -25,6 +25,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.metrics import accuracy_score, plot_roc_curve, f1_score, precision_score, recall_score
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import TimeSeriesSplit
+from imblearn.over_sampling import SMOTE
 
 RAND_STATE  = 42
 READ_STATE = False
@@ -118,15 +119,15 @@ def get_day_number(first_day_of_year, day):
     # day number (0 for monday, 6 for sunday) for day
     return (first_day_of_year + day - 1) % 7
 
-def day_of_week(X):
+def day_of_week(df):
     """
-    :param X:
+    :param df: data frame
     :return: a new column with the day of the week
     """
     ''
 
     day_of_week = np.array([])
-    for index, row in tqdm(X.iterrows(), total=X.shape[0]):
+    for index, row in tqdm(df.iterrows(), total=df.shape[0]):
         # For each data-point, we consider its year and day
         # and calculate what day of the week (Monday, Tuesday, etc)
         # it was when the transaction happened
@@ -136,9 +137,9 @@ def day_of_week(X):
         year_i, day_i = row['year'], row['day']
         day_of_week = np.append (day_of_week, \
                                       get_day_number(datetime.datetime(year_i, 1, 1).weekday(), day_i))
-    X['day_of_week'] = day_of_week
+    df['day_of_week'] = day_of_week
 
-    return X
+    return df
 
 pt = PowerTransformer(method='box-cox')  # transformer to reduce skew, not standard
 
@@ -236,11 +237,14 @@ def transform(X):
     return  Xt
 
 
-from imblearn.over_sampling import SMOTE
+
 
 
 ### 4.1.0 Downsampling
 class Sampler:
+    """
+    Class for resampling data
+    """
 
     def __init__(self, X):
         self.X_df = pd.DataFrame(X)
@@ -318,6 +322,9 @@ def tabulate_scores_df(model_name, y_test, y_pred):
 
 #%%
 class Model:
+    """
+
+    """
     def __init__(self, x_tr, y_tr, X_tr, X_tst, routine, params, classifier, crss_vldtr=None):
         '''Model'''
         self.classifier = classifier
