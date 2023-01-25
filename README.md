@@ -4,12 +4,12 @@
 
 In the last decade, we have witnessed how cryptocurrencies like bitcoin have made their way into malware scams, specifically those which require payments to the hackers for removal. The most well known case is ransomware. Ransomware is rogue compute code that encrypts the victim's filesystem until money is paid to the attacker for decryption. Ransomware operators typically utilize client-server asymmetric key encryption. The public key is used to encrypt the files, while the private key is stored remotely on a server to be accessed when the ransom is paid. Bitcoin is often demanded for ransomware payments, as it provides an anonymous means of transaction on a decentralized peer-to-peer network operating across the globe and without governmental regulation in many countries.
 As such, the use of bitcoin poses a challenge to law enforcement agencies targeting ransomware cybercrime. However, the bitcoin network of addresses and transactions is publically available data, and can be scoured for traces and patterns indicating criminal activity. 
-Indeed, analysis of the data has revealed that addresses linked to ransomware display certain characteristics. 
-For our work, we use a characterization based on [Akcora et al](https://arxiv.org/pdf/1906.07852.pdf), where the network is viewed as a weighted directed graph, to develop an AI models to predict whether a Bitcoin address is being used for ransomware or not.
+Analysis of the blockchain transaction data, when viewed as network, shows that addresses linked to ransomware display certain characteristics. 
+For our work, we use a network/graph characterization based on [Akcora et al](https://arxiv.org/pdf/1906.07852.pdf), where the block chain is topologically mapped to weighted directed graph, to develop ML models to detect ransomware addresses.
 
  ## Data 
  
-The dataset we use is [publically available](https://archive.ics.uci.edu/ml/datasets/BitcoinHeistRansomwareAddressDataset) from the UCI Machine Learning Repository. The data is taken from January 2009 to December 2018. It is a multivariate, time-series table of 2916697 records with 10 attributes per record containing several classes of ransomware. The dataset is non-stationary, has skewed features, and has an extremely unbalanced target variable. 
+The dataset we use is [publically available](https://archive.ics.uci.edu/ml/datasets/BitcoinHeistRansomwareAddressDataset) from the UCI Machine Learning Repository. It covers the BC txn history from from January 2009 to December 2018. It is a multivariate, time-series table of 2916697 records with 10 attributes per record containing several classes of ransomware. The dataset is non-stationary, has skewed features, and has an extremely unbalanced target variable. 
 We simplify our study by ignoring the time dependence. We also convert the labels to binary form according to whether an address is ransomware or not.
   
  
